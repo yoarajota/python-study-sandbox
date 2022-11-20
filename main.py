@@ -25,4 +25,4 @@ while True:
             client.create_tweet(in_reply_to_tweet_id=tweetId, text='fodase')
         else:
             client.create_tweet(in_reply_to_tweet_id=tweetId, text='nao pedi')
-        time.sleep(1500)
+        time.sleep(150)
