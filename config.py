@@ -1,9 +1,9 @@
-import environ
+import os
 
-API_KEY = environ['API_KEY']
-API_SCRET = environ['API_SCRET']
-BEARER_TOKEN = environ['BEARER_TOKEN']
+API_KEY = os.environ['API_KEY']
+API_SCRET = os.environ['API_SCRET']
+BEARER_TOKEN = os.environ['BEARER_TOKEN']
 #ACCESS_TOKEN = environ['ACCESS_TOKEN']
 #ACCESS_TOKEN_SECRET = environ['ACCESS_TOKEN_SECRET']
-ACCESS_TOKEN = environ['ACCESS_TOKEN']
-ACCESS_TOKEN_SECRET = environ['ACCESS_TOKEN_SECRET']
+ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
+ACCESS_TOKEN_SECRET = os.environ['ACCESS_TOKEN_SECRET']
