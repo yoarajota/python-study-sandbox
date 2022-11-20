@@ -2,18 +2,18 @@ import tweepy
 import config
 import re
 import time
-
-client = tweepy.Client(config.BEARER_TOKEN, config.API_KEY, config.API_SCRET, config.ACCESS_TOKEN, config.ACCESS_TOKEN_SECRET)
-
-query = 'from:ioweasy -is:retweet'
-response = client.search_recent_tweets(query=query)
-            # o all é para a api premium ou academica algo assim
-
-tweetId = response.data[0].id
-
-query_replys_of_recent_tweet = 'from:yoarajota in_reply_to_tweet_id:{}'.format(tweetId)
-replys_of_recent_tweet = client.search_recent_tweets(query=query_replys_of_recent_tweet).data
 while True:
+    client = tweepy.Client(config.BEARER_TOKEN, config.API_KEY, config.API_SCRET, config.ACCESS_TOKEN, config.ACCESS_TOKEN_SECRET)
+
+    query = 'from:ioweasy from:citores -is:retweet'
+    response = client.search_recent_tweets(query=query)
+                # o all é para a api premium ou academica algo assim
+
+    tweetId = response.data[0].id
+
+    query_replys_of_recent_tweet = 'from:yoarajota in_reply_to_tweet_id:{}'.format(tweetId)
+    replys_of_recent_tweet = client.search_recent_tweets(query=query_replys_of_recent_tweet).data
+
     if (replys_of_recent_tweet is None):
         auth = tweepy.OAuth1UserHandler(config.API_KEY, config.API_SCRET, config.ACCESS_TOKEN, config.ACCESS_TOKEN_SECRET)
         api = tweepy.API(auth)
