@@ -1,11 +1,15 @@
 import tweepy
 import config
 
-client = tweepy.Client(bearer_token=config.BEARER_TOKEN)
+client = tweepy.Client(config.BEARER_TOKEN, config.API_KEY, config.API_SCRET, config.ACCESS_TOKEN, config.ACCESS_TOKEN_SECRET)
+
 query = 'from:ioweasy -is:retweet'
-query2 = 'malphite'
 response = client.search_recent_tweets(query=query)
             # o all é para a api premium ou academica algo assim
 
-for t in response.data:
-    print(t)
+tweetId = response.data[0].id
+
+auth = tweepy.OAuth1UserHandler(config.API_KEY, config.API_SCRET, config.ACCESS_TOKEN, config.ACCESS_TOKEN_SECRET)
+api = tweepy.API(auth)
+
+client.create_tweet(in_reply_to_tweet_id=tweetId, text='fodaseeeeeeee')
