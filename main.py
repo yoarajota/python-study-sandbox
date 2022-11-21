@@ -5,7 +5,7 @@ import time
 while True:
     client = tweepy.Client(config.BEARER_TOKEN, config.API_KEY, config.API_SCRET, config.ACCESS_TOKEN, config.ACCESS_TOKEN_SECRET)
 
-    query = 'from:ioweasy from:citores -is:retweet'
+    query = 'from:ioweasy OR from:ciitores -is:retweet'
     response = client.search_recent_tweets(query=query)
                 # o all é para a api premium ou academica algo assim
 
@@ -22,7 +22,9 @@ while True:
         last_tweet = client.search_recent_tweets(query=try_to_get_my_last_tweet_query).data[0]
 
         if (re.search('fodase', last_tweet.text)):
-            client.create_tweet(in_reply_to_tweet_id=tweetId, text='fodase')
+            #client.create_tweet(in_reply_to_tweet_id=tweetId, text='fodase')
+            print('a')
         else:
-            client.create_tweet(in_reply_to_tweet_id=tweetId, text='nao pedi')
-    time.sleep(150)
+            print('b')
+            #client.create_tweet(in_reply_to_tweet_id=tweetId, text='nao pedi')
+    time.sleep(15)
