@@ -22,9 +22,7 @@ while True:
         last_tweet = client.search_recent_tweets(query=try_to_get_my_last_tweet_query).data[0]
 
         if (re.search('fodase', last_tweet.text)):
-            #client.create_tweet(in_reply_to_tweet_id=tweetId, text='fodase')
-            print('a')
+            client.create_tweet(in_reply_to_tweet_id=tweetId, text='fodase')
         else:
-            print('b')
-            #client.create_tweet(in_reply_to_tweet_id=tweetId, text='nao pedi')
-    time.sleep(15)
+            client.create_tweet(in_reply_to_tweet_id=tweetId, text='nao pedi')
+    time.sleep(60)
