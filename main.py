@@ -9,6 +9,7 @@ while True:
     response = client.search_recent_tweets(query=query)
                 # o all é para a api premium ou academica algo assim
 
+    print(response.data[0])
     tweetId = response.data[0].id
 
     query_replys_of_recent_tweet = 'from:yoarajota in_reply_to_tweet_id:{}'.format(tweetId)
