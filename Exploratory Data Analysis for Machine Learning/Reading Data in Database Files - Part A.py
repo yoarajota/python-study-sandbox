@@ -4,27 +4,12 @@ import pandas.io.sql as pds
 import pandas as pd
 import requests
 import os
+from helpers import Helpers
 
 # Define the URL from which to download the file
-# url = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-ML0232EN-SkillsNetwork/asset/classic_rock.db"
+url = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-ML0232EN-SkillsNetwork/asset/classic_rock.db"
 
-# # Define the directory where you want to save the file
-# directory = "data/"
-
-# # Create the directory if it does not exist
-# os.makedirs(directory, exist_ok=True)
-
-# # Send an HTTP GET request to the URL
-# response = requests.get(url)
-
-# # Check if the request was successful (status code 200)
-# if response.status_code == 200:
-#     # Open the file in binary write mode and write the contents of the response
-#     with open(os.path.join(directory, "classic_rock.db"), "wb") as f:
-#         f.write(response.content)
-#     print("File downloaded successfully.")
-# else:
-#     print(f"Failed to download the file. Status code: {response.status_code}")
+Helpers.download_file(url, "classic_rock.db")
 
 # We now have a live connection to our SQL database
 
@@ -34,13 +19,54 @@ con = sq3.Connection(path)
 
 # Write the query
 query = '''
-SELECT * 
-FROM rock_songs;
+    SELECT * 
+    FROM rock_songs;
 '''
 
 # Execute the query
 observations = pds.read_sql(query, con)
 
-observations.head()
+print(observations.head())
 
-print(observations)
+# Print white space in console
+print('\n')
+print('\n')
+
+# We can also run any supported SQL query
+# Write the query
+query = '''
+SELECT Artist, Release_Year, COUNT(*) AS num_songs, AVG(PlayCount) AS avg_plays  
+    FROM rock_songs
+    GROUP BY Artist, Release_Year
+    ORDER BY num_songs desc;
+'''
+
+# Execute the query
+observations = pds.read_sql(query, con)
+
+print(observations.head())
+
+# Print white space in console
+print('\n')
+print('\n')
+
+query='''
+SELECT Artist, Release_Year, COUNT(*) AS num_songs, AVG(PlayCount) AS avg_plays  
+    FROM rock_songs
+    GROUP BY Artist, Release_Year
+    ORDER BY num_songs desc;
+'''
+
+# Execute the query
+observations_generator = pds.read_sql(query,
+                            con,
+                            coerce_float=True, # Doesn't efefct this dataset, because floats were correctly parsed
+                            parse_dates=['Release_Year'], # Parse `Release_Year` as a date
+                            chunksize=5 # Allows for streaming results as a series of shorter tables
+                           )
+
+for index, observations in enumerate(observations_generator):
+    if index < 5:
+        print(f'Observations index: {index}'.format(index))
+        print(observations)
+        print('\n')
