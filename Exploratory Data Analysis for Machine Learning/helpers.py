@@ -8,6 +8,9 @@ class Helpers:
         print('\n')
         print('\n')
 
+    def n():
+        print('\n')
+
     # Define a function to download a file
     def download_file(url, file):
         # Define the directory where you want to save the file
