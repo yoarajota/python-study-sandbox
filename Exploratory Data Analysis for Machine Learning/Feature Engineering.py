@@ -87,3 +87,39 @@ ax_after.set(title='after np.log1p', ylabel='frequency', xlabel='value')
 fig.suptitle('Field "{}"'.format(field));
 
 fig.show()
+
+# Perform the skew transformation:
+
+for col in skew_cols.index.values:
+    if col == "SalePrice":
+        continue
+    df[col] = df[col].apply(np.log1p)
+
+h.space()
+# We now have a larger set of potentially-useful features
+print(df.shape)
+
+# There are a *lot* of variables. Let's go back to our saved original data and look at how many values are missing for each variable. 
+df = data
+data.isnull().sum().sort_values()
+
+# Let's pick out just a few numeric columns to illustrate basic feature transformations.
+
+smaller_df= df.loc[:, ['Lot Area', 'Overall Qual', 'Overall Cond', 
+'Year Built', 'Year Remod/Add', 'Gr Liv Area', 
+'Full Bath', 'Bedroom AbvGr', 'Fireplaces', 
+'Garage Cars','SalePrice']]
+
+# Now we can look at summary statistics of the subset data
+smaller_df.describe().T
+
+smaller_df.info()
+
+# There appears to be one NA in Garage Cars - we will take a simple approach and fill it with 0
+smaller_df = smaller_df.fillna(0)
+
+smaller_df.info()
+
+sns.pairplot(smaller_df, plot_kws=dict(alpha=.1, edgecolor='none'))
+
+plt.show()
